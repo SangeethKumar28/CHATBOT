@@ -1,15 +1,19 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sangeeth Mini GPT Studio - AI Workspace</title>
-  <meta name="description" content="A powerful, modern client-side AI chat studio powered by Google Gemini API. Features real-time streaming, multimodal inputs, voice synthesis, and customizable system prompts.">
+  <meta name="description"
+    content="A powerful, modern client-side AI chat studio powered by Google Gemini API. Features real-time streaming, multimodal inputs, voice synthesis, and customizable system prompts.">
 
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
 
   <!-- FontAwesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -20,6 +24,7 @@
   <!-- Application Stylesheet -->
   <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
   <div id="app">
     <!-- Sidebar Navigation -->
@@ -31,7 +36,7 @@
           </div>
           <div>
             <div style="display: flex; align-items: center; gap: 6px;">
-              <span class="brand-title">Gemini Mini</span>
+              <span class="brand-title">Sangeeth Mini</span>
               <span class="brand-badge">GPT</span>
             </div>
           </div>
@@ -63,7 +68,8 @@
             <i class="fa-solid fa-key"></i>
           </button>
         </div>
-        <button class="btn-secondary" id="openSettingsBtn" style="width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px;">
+        <button class="btn-secondary" id="openSettingsBtn"
+          style="width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px;">
           <i class="fa-solid fa-sliders"></i>
           <span>Model Settings</span>
         </button>
@@ -78,7 +84,7 @@
           <button class="icon-btn" id="toggleSidebarBtn" title="Toggle Sidebar">
             <i class="fa-solid fa-bars-staggered"></i>
           </button>
-          
+
           <div class="model-selector-wrapper">
             <select class="model-select" id="modelSelect" title="Select Model">
               <optgroup label="Groq AI Models (gsk_...)">
@@ -118,13 +124,15 @@
           <div class="welcome-logo">
             <i class="fa-solid fa-robot"></i>
           </div>
-          <h1 class="welcome-title">Gemini Mini GPT Studio</h1>
+          <h1 class="welcome-title">Sangeeth Mini GPT Studio</h1>
           <p class="welcome-subtitle">
-            Your personal lightweight AI laboratory powered by Google Gemini. Enter your API key, pick a persona preset, and start generating code, creative writing, or visual analysis.
+            Your personal lightweight AI laboratory powered by Google Gemini. Enter your API key, pick a persona preset,
+            and start generating code, creative writing, or visual analysis.
           </p>
-          
+
           <div class="preset-grid">
-            <div class="preset-card" data-prompt="Act as an expert Full-Stack Software Engineer. Help me debug code and design efficient algorithms with clean syntax.">
+            <div class="preset-card"
+              data-prompt="Act as an expert Full-Stack Software Engineer. Help me debug code and design efficient algorithms with clean syntax.">
               <div class="preset-card-title">
                 <i class="fa-solid fa-code" style="color: #6366f1;"></i>
                 Coding Assistant
@@ -132,7 +140,8 @@
               <div class="preset-card-desc">Debug code, write algorithms, and optimize JS/Python logic.</div>
             </div>
 
-            <div class="preset-card" data-prompt="Act as a Creative Content Strategist. Help me draft engaging copy, blog outlines, and creative scripts.">
+            <div class="preset-card"
+              data-prompt="Act as a Creative Content Strategist. Help me draft engaging copy, blog outlines, and creative scripts.">
               <div class="preset-card-title">
                 <i class="fa-solid fa-pen-nib" style="color: #a855f7;"></i>
                 Creative Writer
@@ -140,7 +149,8 @@
               <div class="preset-card-desc">Draft captivating stories, blog outlines, and marketing copy.</div>
             </div>
 
-            <div class="preset-card" data-prompt="Explain complex technical topics in simple terms with intuitive real-world analogies.">
+            <div class="preset-card"
+              data-prompt="Explain complex technical topics in simple terms with intuitive real-world analogies.">
               <div class="preset-card-title">
                 <i class="fa-solid fa-brain" style="color: #06b6d4;"></i>
                 Concept Simplifier
@@ -148,7 +158,8 @@
               <div class="preset-card-desc">Break down quantum computing or physics using simple analogies.</div>
             </div>
 
-            <div class="preset-card" data-prompt="Summarize the key takeaways from any text or image provided into concise, actionable bullet points.">
+            <div class="preset-card"
+              data-prompt="Summarize the key takeaways from any text or image provided into concise, actionable bullet points.">
               <div class="preset-card-title">
                 <i class="fa-solid fa-bolt" style="color: #eab308;"></i>
                 Rapid Summarizer
@@ -169,17 +180,14 @@
           <div class="attached-images-preview" id="imagePreviewContainer" style="display: none;"></div>
 
           <div class="input-row">
-            <button class="icon-btn" id="attachImageBtn" title="Attach Image (Vision API)" style="border: none; background: transparent;">
+            <button class="icon-btn" id="attachImageBtn" title="Attach Image (Vision API)"
+              style="border: none; background: transparent;">
               <i class="fa-solid fa-paperclip"></i>
             </button>
             <input type="file" id="imageFileInput" accept="image/*" multiple style="display: none;">
 
-            <textarea 
-              class="chat-input" 
-              id="promptInput" 
-              placeholder="Ask Gemini anything... (Shift+Enter for new line)"
-              rows="1"
-            ></textarea>
+            <textarea class="chat-input" id="promptInput"
+              placeholder="Ask Sangeeth AI anything... (Shift+Enter for new line)" rows="1"></textarea>
 
             <div class="input-actions-right">
               <button class="icon-btn mic-btn" id="micBtn" title="Speech to Text">
@@ -207,7 +215,9 @@
         <div class="form-group">
           <label class="form-label">
             <span>Gemini API Key</span>
-            <a href="https://aistudio.google.com/app/apikey" target="_blank" style="color: var(--accent-primary); text-decoration: none; font-size: 0.78rem;">Get Free API Key <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+            <a href="https://aistudio.google.com/app/apikey" target="_blank"
+              style="color: var(--accent-primary); text-decoration: none; font-size: 0.78rem;">Get Free API Key <i
+                class="fa-solid fa-arrow-up-right-from-square"></i></a>
           </label>
           <div class="input-with-eye">
             <input type="password" class="form-input" id="apiKeyInput" placeholder="AIzaSy...">
@@ -215,12 +225,14 @@
               <i class="fa-solid fa-eye" id="eyeIcon"></i>
             </button>
           </div>
-          <span style="font-size: 0.75rem; color: var(--text-subtle);">Stored locally in your browser's localStorage. Never sent to external servers.</span>
+          <span style="font-size: 0.75rem; color: var(--text-subtle);">Stored locally in your browser's localStorage.
+            Never sent to external servers.</span>
         </div>
 
         <div class="form-group">
           <label class="form-label">System Instructions (Persona Context)</label>
-          <textarea class="form-textarea" id="systemInstructionInput" rows="3" placeholder="e.g. You are an expert AI assistant who provides concise, accurate, and structured answers."></textarea>
+          <textarea class="form-textarea" id="systemInstructionInput" rows="3"
+            placeholder="e.g. You are an expert AI assistant who provides concise, accurate, and structured answers."></textarea>
         </div>
 
         <div class="form-group">
@@ -256,8 +268,9 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/9.1.2/marked.min.js"></script>
   <!-- Highlight.js for Syntax Highlighting -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
-  
+
   <!-- Main Application JavaScript -->
   <script src="app.js"></script>
 </body>
+
 </html>
