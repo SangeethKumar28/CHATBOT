@@ -25,7 +25,7 @@
 
   let state = {
     apiKey: localStorage.getItem(STORAGE_KEYS.API_KEY) || PROVIDED_KEY,
-    model: localStorage.getItem(STORAGE_KEYS.MODEL) || (PROVIDED_KEY.startsWith('gsk_') ? 'llama-3.3-70b-versatile' : 'gemini-2.5-flash'),
+    model: localStorage.getItem(STORAGE_KEYS.MODEL) || (PROVIDED_KEY.startsWith('gsk_') ? 'openai/gpt-oss-120b' : 'gemini-2.5-flash'),
     systemInstruction: localStorage.getItem(STORAGE_KEYS.SYSTEM_INSTRUCTION) || '',
     temperature: parseFloat(localStorage.getItem(STORAGE_KEYS.TEMP)) || 0.7,
     maxTokens: parseInt(localStorage.getItem(STORAGE_KEYS.MAX_TOKENS), 10) || 2048,
@@ -97,13 +97,71 @@
   // ==========================================
   // 2. INITIALIZATION & SETUP
   // ==========================================
+  async function fetchAvailableModels() {
+    if (!state.apiKey || state.apiKey.trim().length < 10) return;
+
+    const isGroq = state.apiKey.trim().startsWith('gsk_');
+
+    if (isGroq) {
+      try {
+        const res = await fetch('https://api.groq.com/openai/v1/models', {
+          headers: { 'Authorization': `Bearer ${state.apiKey.trim()}` }
+        });
+        if (!res.ok) return;
+        const data = await res.json();
+        if (data.data && Array.isArray(data.data)) {
+          const textModels = data.data.filter(m => {
+            return m.active !== false && 
+                   (!m.input_modalities || m.input_modalities.includes('text')) && 
+                   (!m.output_modalities || m.output_modalities.includes('text'));
+          });
+
+          if (textModels.length) {
+            DOM.modelSelect.innerHTML = '';
+            const group = document.createElement('optgroup');
+            group.label = 'Groq AI Available Models';
+
+            textModels.forEach(m => {
+              const opt = document.createElement('option');
+              opt.value = m.id;
+              opt.textContent = m.name || m.id;
+              group.appendChild(opt);
+            });
+            DOM.modelSelect.appendChild(group);
+
+            const validIds = textModels.map(m => m.id);
+            if (!validIds.includes(state.model)) {
+              state.model = validIds[0];
+              saveState();
+            }
+            DOM.modelSelect.value = state.model;
+          }
+        }
+      } catch (err) {
+        console.warn('Error fetching Groq models:', err);
+      }
+    } else {
+      DOM.modelSelect.innerHTML = `
+        <optgroup label="Google Gemini Models">
+          <option value="gemini-2.5-flash">Gemini 2.5 Flash</option>
+          <option value="gemini-2.0-flash">Gemini 2.0 Flash</option>
+          <option value="gemini-1.5-pro">Gemini 1.5 Pro</option>
+          <option value="gemini-1.5-flash">Gemini 1.5 Flash</option>
+        </optgroup>
+      `;
+      if (!['gemini-2.5-flash', 'gemini-2.0-flash', 'gemini-1.5-pro', 'gemini-1.5-flash'].includes(state.model)) {
+        state.model = 'gemini-2.5-flash';
+        saveState();
+      }
+      DOM.modelSelect.value = state.model;
+    }
+  }
+
   function initApp() {
     applyTheme(state.theme);
     updateApiKeyStatus();
     loadSettingsIntoModal();
-
-    // Ensure model selector is sync'd
-    DOM.modelSelect.value = state.model;
+    fetchAvailableModels();
 
     // Load or create initial chat session
     if (!state.chats.length) {
@@ -898,6 +956,7 @@
     state.temperature = parseFloat(DOM.tempSlider.value);
     state.maxTokens = parseInt(DOM.maxTokensSlider.value, 10);
     saveState();
+    fetchAvailableModels();
     closeSettingsModal();
   }
 
